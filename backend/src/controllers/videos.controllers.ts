@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express';
 import Video from '../models/Video';
 
-export const getAllVideos: RequestHandler = (req, res) => {
-	res.send('show all videos here...');
+export const getAllVideos: RequestHandler = async (req, res) => {
+	const allVideos = await Video.find();
+	return res.json(allVideos);
 };
 
-export const getVideo: RequestHandler = (req, res) => {
+export const getVideo: RequestHandler = async (req, res) => {
 	res.send('show video here...');
 };
 
@@ -17,10 +18,10 @@ export const createVideo: RequestHandler = async (req, res) => {
 	res.json(response);
 };
 
-export const updateVideo: RequestHandler = (req, res) => {
+export const updateVideo: RequestHandler = async (req, res) => {
 	res.send('update video here...');
 };
 
-export const deleteVideo: RequestHandler = (req, res) => {
+export const deleteVideo: RequestHandler = async (req, res) => {
 	res.send('delete video here...');
 };
