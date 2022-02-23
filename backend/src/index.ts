@@ -1,6 +1,8 @@
 import app from './app';
 import './db/db';
+import { config } from 'dotenv';
+config();
 
-app.listen(3001, () => {
-	console.log('Server running in port 3001');
+app.listen(process.env.PORT, () => {
+	console.log('Server running in port: ' + process.env.PORT);
 });
