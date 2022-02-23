@@ -1,0 +1,13 @@
+GET http://localhost:3001/videos/
+
+###
+GET http://localhost:3001/video/2
+
+###
+POST http://localhost:3001/video
+
+###
+PUT http://localhost:3001/video/3
+
+###
+DELETE http://localhost:3001/video/4
