@@ -17,7 +17,7 @@ export const getVideo: RequestHandler = async (req, res) => {
 };
 
 export const createVideo: RequestHandler = async (req, res) => {
-	const existingVideo = await Video.find({ url: req.body.url });
+	const existingVideo = await Video.findOne({ url: req.body.url });
 	if (existingVideo) return res.status(301).json({ message: 'Video already exists' });
 	const video = new Video(req.body);
 	const response = await video.save();
