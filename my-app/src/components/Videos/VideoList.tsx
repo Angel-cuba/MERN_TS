@@ -12,13 +12,21 @@ const VideoList = () => {
 			.then((data) => setVideos(data));
 	}, []);
 	return (
-		<>
+		<div
+			style={{
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				justifyContent: 'space-around',
+				flexWrap: 'wrap',
+			}}
+		>
 			{videos.map((video, index) => (
 				<div key={index}>
 					<VideoItem video={video} />
 				</div>
 			))}
-		</>
+		</div>
 	);
 };
 
