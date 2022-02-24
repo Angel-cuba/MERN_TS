@@ -1,8 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createVideo } from '../../api/requests';
+import { createVideo, getVideo, updateVideo } from '../../api/requests';
 import { Video } from '../Interfaces/interfaces';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const VideoForm = () => {
 	const [video, setVideo] = useState<Video>({
@@ -10,6 +10,9 @@ const VideoForm = () => {
 		description: '',
 		url: '',
 	});
+
+	const params = useParams();
+	console.log(params);
 
 	const navigate = useNavigate();
 
@@ -22,11 +25,28 @@ const VideoForm = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		await createVideo(video)
-			.then((response) => toast.success('New video added successfully'))
-			.catch((err) => console.log(err));
+
+		if (!params.id) {
+			await createVideo(video)
+				.then((response) => toast.success('New video added successfully'))
+				.catch((err) => console.log(err));
+		} else {
+			updateVideo(params.id, video);
+		}
 
 		navigate('/');
+	};
+
+	useEffect(() => {
+		if (params.id) {
+			handleVideo(params.id);
+		}
+	}, []);
+
+	const handleVideo = async (id: string) => {
+		await getVideo(id)
+			.then((res) => res.json())
+			.then((data) => setVideo(data));
 	};
 
 	return (
@@ -67,7 +87,11 @@ const VideoForm = () => {
 									placeholder="Write a description"
 								></textarea>
 							</div>
-							<button className="btn btn-primary ">Create a new video</button>
+							{params.id ? (
+								<button className="btn btn-info">Update</button>
+							) : (
+								<button className="btn btn-primary ">Create a new video</button>
+							)}
 						</form>
 					</div>
 				</div>
