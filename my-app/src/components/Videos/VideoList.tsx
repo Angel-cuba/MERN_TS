@@ -13,8 +13,10 @@ const VideoList = () => {
 	}, []);
 	return (
 		<>
-			{videos.map((video) => (
-				<VideoItem video={video} />
+			{videos.map((video, index) => (
+				<div key={index}>
+					<VideoItem video={video} />
+				</div>
 			))}
 		</>
 	);
